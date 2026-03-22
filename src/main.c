@@ -33,11 +33,12 @@ extern int ir_init(void);
 extern int file_manager_init(void);
 extern void mobile_app_init(void);
 extern void mobile_app_test(void);
-
 extern void webadmin_init(int port);
 extern void webadmin_test(void);
 extern void skills_init(void);
 extern void skills_test(void);
+
+extern void scene_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -69,12 +70,12 @@ int main(int argc, char *argv[]) {
     file_manager_init();
     mobile_app_init();
     mobile_app_test();
-    
     webadmin_init(8088);
     webadmin_test();
-    
     skills_init();
     skills_test();
+    
+    scene_test();
     
     ai_system_init();
     ui_init();

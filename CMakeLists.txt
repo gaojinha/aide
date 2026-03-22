@@ -70,6 +70,7 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/app/push/push.c
     ${SOURCE_DIR}/app/settings/wizard.c
     ${SOURCE_DIR}/app/filemanager/file_manager.c
+    ${SOURCE_DIR}/app/scene/scene.c
     ${SOURCE_DIR}/app/mobile_app/mobile_app.c
     ${SOURCE_DIR}/app/webadmin/webadmin.c
     ${SOURCE_DIR}/ai/skills/skills.c
