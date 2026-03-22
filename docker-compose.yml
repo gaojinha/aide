@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  aide:
+    build: .
+    container_name: aide
+    hostname: aide-device
+    ports:
+      - "8080:8080"   # API
+      - "18789:18789"  # Gateway
+    volumes:
+      - ./config:/app/config
+      - ./data:/app/data
+      - ./logs:/app/logs
+    environment:
+      - AIDE_MODE=production
+      - LOG_LEVEL=info
+    restart: unless-stopped
+    devices:
+      - /dev/video0:/dev/video0
+      - /dev/ttyS0:/dev/ttyS0
+    networks:
+      - aide-net
+
+  # 数据库
+  db:
+    image: postgres:15
+    container_name: aide-db
+    environment:
+      POSTGRES_DB: aide
+      POSTGRES_USER: aide
+      POSTGRES_PASSWORD: aide123
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - aide-net
+
+  # Redis缓存
+  redis:
+    image: redis:7-alpine
+    container_name: aide-redis
+    networks:
+      - aide-net
+
+volumes:
+  db-data:
+
+networks:
+  aide-net:
+    driver: bridge

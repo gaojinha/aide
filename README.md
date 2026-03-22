@@ -37,12 +37,8 @@ make
 # 运行
 ./aide
 
-# 交叉编译 (RK3568)
-../scripts/build-rk3568.sh
-
-# 安装服务
-sudo ../scripts/install.sh
-sudo systemctl start aide
+# Docker运行
+docker-compose up -d
 ```
 
 ## 文档
@@ -51,10 +47,29 @@ sudo systemctl start aide
 - [API文档](docs/API.md)
 - [命令列表](docs/COMMANDS.md)
 - [架构说明](docs/ARCH.md)
-- [模块说明](docs/MODULES.md)
-- [驱动API](docs/DRIVER_API.md)
-- [配置说明](docs/CONFIG.md)
-- [设备树](device-tree/PINOUT.md)
+
+## CI/CD
+
+```bash
+# 本地CI
+./scripts/ci-local.sh
+
+# GitHub Actions
+# 推送自动触发CI/CD
+```
+
+## Docker
+
+```bash
+# 构建
+docker build -t aide:latest .
+
+# 运行
+docker-compose up -d
+
+# 查看日志
+docker-compose logs -f
+```
 
 ## 版本
 
@@ -63,7 +78,3 @@ sudo systemctl start aide
 ## 仓库
 
 https://gitcode.com/gaojinha/aide.git
-
-## 许可
-
-MIT License
