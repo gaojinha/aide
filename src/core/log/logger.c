@@ -3,14 +3,11 @@
  */
 
 #include <stdio.h>
-#include <stdarg.h>
 #include <string.h>
 #include <time.h>
 
-#define MAX_LOG_LEN 4096
-
 typedef enum {
-    LOG_DEBUG,
+    LOG_DEBUG = 0,
     LOG_INFO,
     LOG_WARN,
     LOG_ERROR
@@ -19,72 +16,37 @@ typedef enum {
 static log_level_t current_level = LOG_INFO;
 static FILE *log_file = NULL;
 
-// 初始化日志
-int log_init(const char *filename) {
-    if (filename) {
-        log_file = fopen(filename, "a");
-        printf("[Log] File: %s\n", filename);
-    }
-    printf("[Log] System initialized\n");
-    return 0;
+int log_init(const char *path) {
+    log_file = fopen(path ? path : "/tmp/aide.log", "a");
+    printf("[Log] Initialized\n");
+    return log_file ? 0 : -1;
 }
 
-// 设置级别
-void log_set_level(log_level_t level) {
-    current_level = level;
-}
+void log_set_level(log_level_t level) { current_level = level; }
 
-// 写日志
-void log_write(log_level_t level, const char *fmt, ...) {
+void log_write(log_level_t level, const char *msg) {
     if (level < current_level) return;
     
-    char buffer[MAX_LOG_LEN];
-    time_t now = time(NULL);
-    struct tm *tm = localtime(&now);
+    const char *names[] = {"DEBUG", "INFO", "WARN", "ERROR"};
+    printf("[%s] %s\n", names[level], msg);
     
-    char *level_str[] = {"DEBUG", "INFO", "WARN", "ERROR"};
-    
-    va_list args;
-    va_start(args, fmt);
-    vsnprintf(buffer, sizeof(buffer), fmt, args);
-    va_end(args);
-    
-    char log_line[MAX_LOG_LEN];
-    sprintf(log_line, "[%02d:%02d:%02d] [%s] %s\n",
-            tm->tm_hour, tm->tm_min, tm->tm_sec,
-            level_str[level], buffer);
-    
-    printf("%s", log_line);
     if (log_file) {
-        fprintf(log_file, "%s", log_line);
+        fprintf(log_file, "[%s] %s\n", names[level], msg);
         fflush(log_file);
     }
 }
 
-// 便捷函数
-void log_debug(const char *fmt, ...) {
-    char buffer[MAX_LOG_LEN];
-    va_list args;
-    va_start(args, fmt);
-    vsnprintf(buffer, sizeof(buffer), fmt, args);
-    va_end(args);
-    log_write(LOG_DEBUG, "%s", buffer);
-}
+#define LOG_DEBUG(msg) log_write(LOG_DEBUG, msg)
+#define LOG_INFO(msg)  log_write(LOG_INFO, msg)
+#define LOG_WARN(msg)  log_write(LOG_WARN, msg)
+#define LOG_ERROR(msg) log_write(LOG_ERROR, msg)
 
-void log_info(const char *fmt, ...) {
-    char buffer[MAX_LOG_LEN];
-    va_list args;
-    va_start(args, fmt);
-    vsnprintf(buffer, sizeof(buffer), fmt, args);
-    va_end(args);
-    log_write(LOG_INFO, "%s", buffer);
-}
+void log_close(void) { if (log_file) fclose(log_file); }
 
-void log_error(const char *fmt, ...) {
-    char buffer[MAX_LOG_LEN];
-    va_list args;
-    va_start(args, fmt);
-    vsnprintf(buffer, sizeof(buffer), fmt, args);
-    va_end(args);
-    log_write(LOG_ERROR, "%s", buffer);
+void log_test(void) {
+    printf("\n=== Log Test ===\n");
+    LOG_INFO("Info message");
+    LOG_WARN("Warning message");
+    LOG_ERROR("Error message");
+    printf("==================\n\n");
 }
