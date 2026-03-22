@@ -1,30 +1,22 @@
 /**
- * 人格化模块 - 11项性格属性
+ * 人格化模块 - 11项性格属性 + 智能问答
  */
 
 #include <stdio.h>
 #include <string.h>
 
-// 11项性格属性
 typedef struct {
-    // 基础信息
-    char name[32];           // 名字
-    char gender[16];         // 性别
-    char age[16];            // 年龄
-    
-    // 性格特征
-    char tone[32];          // 语气
-    char style[32];         // 风格
-    
-    // 说话方式
-    char greeting[64];      // 打招呼
-    char goodbye[64];       // 告别
-    char catchphrase[64];   // 口头禅
-    
-    // 价值观
-    char hobby[128];        // 爱好
-    char specialty[128];    // 特长
-    char belief[128];       // 信念
+    char name[32];
+    char gender[16];
+    char age[16];
+    char tone[32];
+    char style[32];
+    char greeting[64];
+    char goodbye[64];
+    char catchphrase[64];
+    char hobby[128];
+    char specialty[128];
+    char belief[128];
 } personality_t;
 
 static personality_t p = {
@@ -52,6 +44,33 @@ void personality_set_name(const char *name) { strncpy(p.name, name, 31); }
 const char* personality_get_greeting(void) { return p.greeting; }
 const char* personality_get_goodbye(void) { return p.goodbye; }
 const char* personality_get_catchphrase(void) { return p.catchphrase; }
+
+// 智能回复
+int personality_chat(const char *input, char *output, int max_len) {
+    if (strstr(input, "你好") || strstr(input, "hello") || strstr(input, "hi")) {
+        snprintf(output, max_len, "%s 我是%s，随时待命！%s", 
+            p.greeting, p.name, p.catchphrase);
+    }
+    else if (strstr(input, "你是谁") || strstr(input, "叫什么")) {
+        snprintf(output, max_len, 
+            "我是%s，一个永远在线的AI助理。性别%s，年龄%s。%s",
+            p.name, p.gender, p.age, p.catchphrase);
+    }
+    else if (strstr(input, "能做什么") || strstr(input, "功能")) {
+        snprintf(output, max_len, 
+            "我%s，能帮你做很多事：打电话发消息、查信息、播放音乐、设提醒、控制家居、陪你聊天。我的特长是：%s",
+            p.name, p.specialty);
+    }
+    else if (strstr(input, "帮")) {
+        snprintf(output, max_len, "尽管说！%s 还有啥要问的？", p.catchphrase);
+    }
+    else {
+        snprintf(output, max_len, "明白了！%s 还有啥要问的？", p.catchphrase);
+    }
+    
+    printf("[Personality] Chat: %s\n", output);
+    return 0;
+}
 
 void personality_dump(void) {
     printf("\n=== aide Personality ===\n");

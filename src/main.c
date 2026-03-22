@@ -8,8 +8,7 @@
 
 extern int personality_init(void);
 extern void personality_dump(void);
-extern const char* personality_get_greeting(void);
-extern const char* personality_get_catchphrase(void);
+extern int personality_chat(const char *input, char *output, int max_len);
 
 extern int memory_init(void);
 extern int nlp_init(void);
@@ -23,21 +22,29 @@ extern int wizard_is_done(void);
 extern int ui_init(void);
 extern void ui_splash(void);
 
+void test_chat(const char *input) {
+    char output[512];
+    personality_chat(input, output, 512);
+    printf("\n👤 你: %s\n", input);
+    printf("🤖 aide: %s\n", output);
+}
+
 int main(int argc, char *argv[]) {
-    if (!wizard_is_done()) {
-        printf("\n=== Setup ===\n");
-        for (int i = 0; i < 6; i++) wizard_run();
-    }
-    
     ui_splash();
-    printf("  aide v%s\n", AI_ASSISTANT_VERSION);
+    printf("  aide v%s\n\n", AI_ASSISTANT_VERSION);
 
     log_init("/tmp/aide.log");
     ai_system_init();
-    ui_init();
     
     personality_init();
     personality_dump();
+    
+    // 测试人格问答
+    printf("\n=== 人格问答测试 ===\n");
+    test_chat("你好");
+    test_chat("你是谁");
+    test_chat("你能做什么");
+    test_chat("帮帮我");
     
     memory_init();
     nlp_init();
@@ -45,12 +52,6 @@ int main(int argc, char *argv[]) {
     voice_init();
     model_init();
     settings_init();
-    
-    printf("\n=== Demo ===\n");
-    printf("User: 你好\n");
-    printf("aide: %s\n", personality_get_greeting());
-    printf("User: 今天天气\n");
-    printf("aide: 晴天，25度。%s\n", personality_get_catchphrase());
     
     printf("\n[Main] aide running...\n");
     sleep(2);
