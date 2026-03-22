@@ -55,6 +55,7 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/driver/video/video.c
     ${SOURCE_DIR}/driver/power/power.c
     ${SOURCE_DIR}/driver/ir/ir.c
+    ${SOURCE_DIR}/driver/network/network_diag.c
     ${SOURCE_DIR}/driver/display/display.c
     ${SOURCE_DIR}/driver/network/network.c
     ${SOURCE_DIR}/app/phone/phone.c

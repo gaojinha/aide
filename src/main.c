@@ -40,8 +40,10 @@ extern void firmware_test(void);
 extern void unit_test_init(void);
 extern void test_run_all(void);
 extern void remote_log_test(void);
-
 extern void backup_test(void);
+
+extern void net_diag_init(void);
+extern void net_diag_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -72,7 +74,8 @@ int main(int argc, char *argv[]) {
     ir_init();
     file_manager_init();
     
-    backup_test();
+    net_diag_init();
+    net_diag_test();
     
     ai_system_init();
     ui_init();
