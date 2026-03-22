@@ -18,6 +18,9 @@
 | 永远在 | 随时可用，永不掉线 |
 | 永远懂你 | 记住习惯，越用越懂你 |
 | 人格化 | 有名字、性格、感情 |
+| 主动感知 | 主动观察环境，主动关心 |
+| 主动执行 | 不仅提醒，还会直接执行 |
+| 安全 | 除了本人，谁也无法破解 |
 
 ## 技术架构
 
@@ -26,18 +29,63 @@
 - **AI**: 本地大模型 + 云端增强
 - **语音**: Whisper (STT) + Edge TTS
 
-## 项目结构
+## 模块结构
 
 ```
-ai-assistant-project/
-├── docs/           # 项目文档
-│   ├── SPEC.md    # 技术方案
-│   ├── TASKS.md   # 任务拆解
-│   └── ENV.md     # 开发环境
-├── src/            # 源代码
-├── config/         # 配置文件
-├── scripts/        # 脚本工具
-└── tests/          # 测试用例
+src/
+├── core/           # 核心模块
+│   ├── system.c   # 系统管理
+│   ├── process.c  # 进程管理
+│   ├── ipc.c      # 进程间通信
+│   ├── storage.c  # 存储管理
+│   └── security.c # 安全模块
+│
+├── ai/             # AI模块
+│   ├── nlp/       # 自然语言理解
+│   ├── vision/     # 视觉识别
+│   ├── speech/     # 语音处理
+│   └── memory/     # 记忆系统
+│
+├── driver/         # 驱动模块
+│   ├── camera/     # 摄像头
+│   ├── sensor/     # 传感器
+│   ├── display/    # 显示
+│   └── network/    # 网络
+│
+├── app/            # 应用模块
+│   ├── phone/      # 电话
+│   ├── messaging/  # 消息
+│   └── settings/   # 设置
+│
+└── ui/             # 界面模块
+```
+
+## 编译
+
+```bash
+# 创建编译目录
+mkdir build && cd build
+
+# 配置
+cmake ..
+
+# 编译
+make
+
+# 输出
+# build/ai_assistant (ARM64)
+```
+
+## 测试
+
+```bash
+# 运行单元测试
+cd build
+ctest
+
+# 或单独运行
+./test_core
+./test_ai
 ```
 
 ## 开发进度
@@ -45,7 +93,8 @@ ai-assistant-project/
 | 阶段 | 状态 |
 |------|------|
 | 环境搭建 | ✅ 完成 |
-| 最小系统 | 🔄 进行中 |
+| 代码框架 | ✅ 完成 |
+| 最小系统 | ⏳ 等SDK |
 | 通信能力 | ⏳ 待开始 |
 | AI对话 | ⏳ 待开始 |
 | 语音能力 | ⏳ 待开始 |
@@ -55,10 +104,11 @@ ai-assistant-project/
 - [技术方案](./docs/SPEC.md)
 - [任务拆解](./docs/TASKS.md)
 - [开发环境](./docs/ENV.md)
+- [编译指南](./BUILD.md)
 
-## 联系方式
+## Git仓库
 
-- GitCode: https://gitcode.com/gaojinha/ai-assistant-project
+https://gitcode.com/gaojinha/ai-assistant-project
 
 ## 许可证
 
