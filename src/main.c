@@ -33,11 +33,14 @@ extern int ir_init(void);
 extern int file_manager_init(void);
 extern void error_test(void);
 extern void performance_test(void);
-
 extern int watchdog_init(void);
 extern void watchdog_test(void);
 extern void power_mgmt_test(void);
 extern void firmware_test(void);
+
+extern void unit_test_init(void);
+extern void test_run_all(void);
+extern void remote_log_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -68,12 +71,12 @@ int main(int argc, char *argv[]) {
     ir_init();
     file_manager_init();
     
-    watchdog_init();
-    watchdog_test();
+    // 单元测试
+    unit_test_init();
+    test_run_all();
     
-    power_mgmt_test();
-    
-    firmware_test();
+    // 远程日志
+    remote_log_test();
     
     ai_system_init();
     ui_init();
