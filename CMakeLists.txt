@@ -41,6 +41,7 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/driver/wifi/wifi.c
     ${SOURCE_DIR}/driver/bluetooth/bluetooth.c
     ${SOURCE_DIR}/driver/audio/audio.c
+    ${SOURCE_DIR}/driver/video/video.c
     ${SOURCE_DIR}/driver/display/display.c
     ${SOURCE_DIR}/driver/network/network.c
     ${SOURCE_DIR}/app/phone/phone.c
