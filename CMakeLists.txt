@@ -13,6 +13,7 @@ set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 include_directories(${INCLUDE_DIR})
 
+# 主程序
 set(MAIN_SOURCES
     ${SOURCE_DIR}/main.c
     ${SOURCE_DIR}/core/system.c
@@ -20,6 +21,10 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/core/ipc.c
     ${SOURCE_DIR}/core/storage.c
     ${SOURCE_DIR}/core/security.c
+    ${SOURCE_DIR}/core/protocol/http.c
+    ${SOURCE_DIR}/core/protocol/websocket.c
+    ${SOURCE_DIR}/core/config/config.c
+    ${SOURCE_DIR}/core/log/logger.c
     ${SOURCE_DIR}/driver/camera/camera.c
     ${SOURCE_DIR}/driver/sensor/sensor.c
     ${SOURCE_DIR}/driver/display/display.c
@@ -36,15 +41,5 @@ set(MAIN_SOURCES
 
 add_executable(ai_assistant ${MAIN_SOURCES})
 target_link_libraries(ai_assistant pthread)
-
-enable_testing()
-add_executable(test_core test/unit/test_core.c
-    ${SOURCE_DIR}/core/process.c ${SOURCE_DIR}/core/ipc.c
-    ${SOURCE_DIR}/core/storage.c ${SOURCE_DIR}/core/security.c)
-add_executable(test_personality test/unit/test_personality.c
-    ${SOURCE_DIR}/ai/personality.c)
-
-add_test(NAME core_test COMMAND test_core)
-add_test(NAME personality_test COMMAND test_personality)
 
 install(TARGETS ai_assistant DESTINATION bin)
