@@ -1,0 +1,16 @@
+README.md
+setup.py
+aide_phone_sdk.egg-info/PKG-INFO
+aide_phone_sdk.egg-info/SOURCES.txt
+aide_phone_sdk.egg-info/dependency_links.txt
+aide_phone_sdk.egg-info/requires.txt
+aide_phone_sdk.egg-info/top_level.txt
+aide_sdk/__init__.py
+aide_sdk/__main__.py
+aide_sdk/chat.py
+aide_sdk/client.py
+aide_sdk/health.py
+aide_sdk/settings.py
+aide_sdk/skills.py
+aide_sdk/stt.py
+aide_sdk/tts.py

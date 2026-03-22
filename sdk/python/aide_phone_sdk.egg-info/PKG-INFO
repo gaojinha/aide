@@ -1,0 +1,67 @@
+Metadata-Version: 2.4
+Name: aide-phone-sdk
+Version: 0.1.0
+Summary: AIDE AI Phone Assistant Python SDK
+Home-page: https://github.com/gaojinha/aide
+Author: aide Team
+Author-email: dev@aide.dev
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: requests>=2.28.0
+Provides-Extra: stream
+Requires-Dist: sseclient-py>=0.0.1; extra == "stream"
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# aide SDK
+
+AI手机助手 Python SDK
+
+## 安装
+
+```bash
+pip install aide-sdk
+```
+
+## 快速开始
+
+```python
+from aide_sdk import AideClient
+
+client = AideClient(base_url="http://localhost:8080")
+result = client.chat("你好")
+print(result)
+```
+## API
+
+### 对话
+```python
+client.chat("你好")
+```
+
+### 语音合成
+```python
+client.tts("你好")
+```
+
+### 技能调用
+```python
+client.skills.weather("北京")
+client.skills.play_music(song="演员")
+```
