@@ -16,6 +16,10 @@ extern int settings_init(void);
 extern int camera_init(void);
 extern void log_test(void);
 
+extern int config_init(void);
+extern void config_test(void);
+extern void config_list(void);
+
 extern int ui_init(void);
 extern void ui_splash(void);
 
@@ -24,7 +28,9 @@ int main(int argc, char *argv[]) {
     printf("  aide v%s\n\n", AI_ASSISTANT_VERSION);
 
     log_init("/tmp/aide.log");
-    log_test();
+    config_init();
+    config_test();
+    config_list();
     
     ai_system_init();
     ui_init();
