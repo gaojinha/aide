@@ -23,6 +23,7 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/core/auth.c
     ${SOURCE_DIR}/core/acl.c
     ${SOURCE_DIR}/core/secureboot.c
+    ${SOURCE_DIR}/core/secure_storage.c
     ${SOURCE_DIR}/core/process.c
     ${SOURCE_DIR}/core/ipc.c
     ${SOURCE_DIR}/core/storage.c

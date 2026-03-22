@@ -21,9 +21,10 @@ extern int ota_init(void);
 extern int security_init(void);
 extern int auth_init(void);
 extern int acl_init(void);
-
 extern int secureboot_init(void);
-extern void secureboot_test(void);
+
+extern int secure_storage_init(void);
+extern void secure_storage_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -43,9 +44,10 @@ int main(int argc, char *argv[]) {
     security_init();
     auth_init();
     acl_init();
-    
     secureboot_init();
-    secureboot_test();
+    
+    secure_storage_init();
+    secure_storage_test();
     
     ai_system_init();
     ui_init();
