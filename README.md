@@ -108,7 +108,7 @@ ctest
 
 ## Git仓库
 
-https://gitcode.com/gaojinha/ai-assistant-project
+https://gitcode.com/gaojinha/aide
 
 ## 许可证
 
