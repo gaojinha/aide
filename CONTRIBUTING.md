@@ -20,7 +20,7 @@
 ## 问题反馈
 
 通过 GitCode Issues 报告问题：
-https://gitcode.com/gaojinha/ai-assistant-project/issues
+https://gitcode.com/gaojinha/aide/issues
 
 ## 许可证
 

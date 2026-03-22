@@ -9,7 +9,7 @@
 
 ```bash
 # 1. 进入项目目录
-cd ai-assistant-project
+cd aide
 
 # 2. 创建编译目录
 mkdir build && cd build

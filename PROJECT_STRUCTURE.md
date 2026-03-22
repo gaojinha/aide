@@ -3,7 +3,7 @@
 ## 目录说明
 
 ```
-ai-assistant-project/
+aide/
 │
 ├── docs/                  # 项目文档
 │   ├── SPEC.md           # 完整方案（第一章-第九章）

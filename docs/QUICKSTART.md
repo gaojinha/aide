@@ -9,8 +9,8 @@
 
 ```bash
 # 克隆项目
-git clone https://gitcode.com/gaojinha/ai-assistant-project.git
-cd ai-assistant-project
+git clone https://gitcode.com/gaojinha/aide.git
+cd aide
 
 # 编译
 mkdir build && cd build
