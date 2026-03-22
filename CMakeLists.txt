@@ -4,7 +4,6 @@ project(AIAssistant VERSION 0.1.0 LANGUAGES C)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
-# ARM64交叉编译
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR aarch64)
 set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)
@@ -14,7 +13,6 @@ set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 include_directories(${INCLUDE_DIR})
 
-# 主程序
 set(MAIN_SOURCES
     ${SOURCE_DIR}/main.c
     ${SOURCE_DIR}/core/system.c
@@ -43,8 +41,10 @@ enable_testing()
 add_executable(test_core test/unit/test_core.c
     ${SOURCE_DIR}/core/process.c ${SOURCE_DIR}/core/ipc.c
     ${SOURCE_DIR}/core/storage.c ${SOURCE_DIR}/core/security.c)
-add_executable(test_ai test/unit/test_ai.c)
-add_executable(test_driver test/unit/test_driver.c)
-add_executable(test_app test/unit/test_app.c)
+add_executable(test_personality test/unit/test_personality.c
+    ${SOURCE_DIR}/ai/personality.c)
+
+add_test(NAME core_test COMMAND test_core)
+add_test(NAME personality_test COMMAND test_personality)
 
 install(TARGETS ai_assistant DESTINATION bin)

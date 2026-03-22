@@ -106,3 +106,75 @@ void memory_list(void) {
     }
     printf("==========================\n\n");
 }
+
+// 习惯结构
+typedef struct {
+    char action[64];     // 动作
+    char time[16];      // 时间
+    char location[64];  // 位置
+    int count;          // 次数
+} habit_t;
+
+static habit_t habits[100];
+static int habit_count = 0;
+
+// 学习用户习惯
+int memory_learn_context(const char *action, const char *time, const char *location) {
+    // 检查是否已有
+    for (int i = 0; i < habit_count; i++) {
+        if (strcmp(habits[i].action, action) == 0) {
+            if (time) strcpy(habits[i].time, time);
+            if (location) strcpy(habits[i].location, location);
+            habits[i].count++;
+            printf("[Memory] Updated habit: %s (count: %d)\n", action, habits[i].count);
+            return 0;
+        }
+    }
+    // 新增
+    if (habit_count < 100) {
+        strcpy(habits[habit_count].action, action);
+        if (time) strcpy(habits[habit_count].time, time);
+        if (location) strcpy(habits[habit_count].location, location);
+        habits[habit_count].count = 1;
+        habit_count++;
+        printf("[Memory] Learned habit: %s\n", action);
+    }
+    return 0;
+}
+
+// 预测用户行为
+int memory_predict(const char *context, char *prediction) {
+    printf("[Memory] Predicting based on: %s\n", context);
+    // 简单预测
+    for (int i = 0; i < habit_count; i++) {
+        if (strstr(context, habits[i].action)) {
+            sprintf(prediction, "你可能在%s %s", 
+                   habits[i].time, habits[i].location);
+            return 0;
+        }
+    }
+    sprintf(prediction, "暂无预测");
+    return -1;
+}
+
+// 主动建议
+int memory_suggest(char *suggestion) {
+    // 检查是否有高频习惯
+    for (int i = 0; i < habit_count; i++) {
+        if (habits[i].count > 5) {
+            sprintf(suggestion, "你经常在%s %s做%s，要提醒你吗？",
+                   habits[i].time, habits[i].location, habits[i].action);
+            return 0;
+        }
+    }
+    sprintf(suggestion, "暂无建议");
+    return -1;
+}
+
+// 统计用户兴趣
+void memory_stats(void) {
+    printf("\n=== Memory Stats ===\n");
+    printf("Total memories: %d\n", memory_count);
+    printf("Total habits: %d\n", habit_count);
+    printf("===================\n\n");
+}

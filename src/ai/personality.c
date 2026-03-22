@@ -94,3 +94,40 @@ int personality_generate(const char *input, char *output) {
     }
     return 0;
 }
+
+// 保存配置到文件
+int personality_save(const char *filename) {
+    FILE *f = fopen(filename, "w");
+    if (!f) return -1;
+    fprintf(f, "name=%s\n", current.name);
+    fprintf(f, "gender=%s\n", current.gender);
+    fprintf(f, "age=%s\n", current.age_str);
+    fprintf(f, "birthday=%s\n", current.birthday);
+    fprintf(f, "personality=%s\n", current.personality);
+    fprintf(f, "hobbies=%s\n", current.hobbies);
+    fprintf(f, "skills=%s\n", current.skills);
+    fprintf(f, "expertise=%s\n", current.expertise);
+    fprintf(f, "address=%s\n", current.address);
+    fprintf(f, "tone=%s\n", current.tone);
+    fprintf(f, "catchphrase=%s\n", current.catchphrase);
+    fclose(f);
+    printf("[Personality] Saved to %s\n", filename);
+    return 0;
+}
+
+// 从文件加载配置
+int personality_load(const char *filename) {
+    FILE *f = fopen(filename, "r");
+    if (!f) return -1;
+    
+    char line[256];
+    while (fgets(line, sizeof(line), f)) {
+        char key[64], value[128];
+        if (sscanf(line, "%63[^=]=%127[^\n]", key, value) == 2) {
+            personality_set(key, value);
+        }
+    }
+    fclose(f);
+    printf("[Personality] Loaded from %s\n", filename);
+    return 0;
+}
