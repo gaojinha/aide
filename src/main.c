@@ -16,19 +16,24 @@ extern int settings_init(void);
 extern int wizard_run(void);
 extern int wizard_is_done(void);
 
+// 语音播报实现
+void wizard_speak(const char *text) {
+    printf("[Voice] 🔊 %s\n", text);
+}
+
 extern int ui_init(void);
 extern void ui_splash(void);
 
 int main(int argc, char *argv[]) {
-    // 检查是否首次运行
+    // 首次设置
     if (!wizard_is_done()) {
-        printf("\n=== 首次设置 ===\n");
+        printf("\n=== First Time Setup ===\n");
         wizard_run();
         wizard_run();
         wizard_run();
         wizard_run();
         wizard_run();
-        wizard_run();  // 完成
+        wizard_run();
     }
     
     ui_splash();

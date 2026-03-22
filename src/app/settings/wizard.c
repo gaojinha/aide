@@ -1,5 +1,5 @@
 /**
- * 首次设置向导
+ * 首次设置向导 - 语音+界面同步
  */
 
 #include <stdio.h>
@@ -17,79 +17,92 @@ typedef enum {
 static wizard_step_t current_step = WIZARD_WELCOME;
 static int wizard_done = 0;
 
+// 语音播报函数(外部定义)
+extern void wizard_speak(const char *text);
+
 int wizard_is_done(void) { return wizard_done; }
 void wizard_reset(void) { current_step = WIZARD_WELCOME; wizard_done = 0; }
 
-void wizard_welcome(void) {
-    printf("\n");
-    printf("╔════════════════════════════════════════╗\n");
-    printf("║        🎉 Welcome to aide! 🎉         ║\n");
+// 语音+界面同步
+void wizard_show(const char *title, const char *voice_text) {
+    // 界面显示
+    printf("\n╔════════════════════════════════════════╗\n");
+    printf("║ %-36s║\n", title);
     printf("╚════════════════════════════════════════╝\n");
-    printf("\n");
-    printf("I'll guide you through the setup.\n");
+    
+    // 语音播报
+    if (voice_text) {
+        wizard_speak(voice_text);
+    }
+}
+
+void wizard_welcome(void) {
+    wizard_show("🎉 Welcome to aide!", 
+        "你好！欢迎使用 aide，我来帮你完成设置。");
+    
+    printf("\nI'll guide you through the setup.\n");
     printf("About 2 minutes.\n");
-    printf("\n");
-    printf("Ready? (say 'start' or press enter)\n");
+    printf("\nReady? (say 'start' or press enter)\n");
 }
 
 void wizard_ask_name(void) {
-    printf("\n");
-    printf("📝 Step 1: Your Name\n");
+    wizard_show("📝 Step 1: Your Name",
+        "第一步，设置我的名字。");
+    
     printf("What's my name? e.g.:\n");
     printf("  - Wang Er Gou\n");
     printf("  - Xiao Ai\n");
     printf("  - Assistant\n");
-    printf("\n");
-    printf("Tell me: [speak or type]\n");
+    printf("\nTell me: [speak or type]\n");
+    wizard_speak("请告诉我你想叫我什么名字");
 }
 
 void wizard_ask_wake_word(void) {
-    printf("\n");
-    printf("🔔 Step 2: Wake Word\n");
+    wizard_show("🔔 Step 2: Wake Word",
+        "第二步，设置唤醒词。");
+    
     printf("Say this to wake me:\n");
     printf("  - hello aide\n");
     printf("  - hey assistant\n");
     printf("  - xiao ai\n");
-    printf("\n");
-    printf("Set it: [speak or type]\n");
+    printf("\nSet it: [speak or type]\n");
+    wizard_speak("以后叫我的时候就说这个词");
 }
 
 void wizard_ask_api_key(void) {
-    printf("\n");
-    printf("🔑 Step 3: API Key\n");
+    wizard_show("🔑 Step 3: API Key",
+        "第三步，设置API密钥。");
+    
     printf("To make me smarter, set API Key.\n");
-    printf("\n");
-    printf("Recommended: MiniMax API\n");
+    printf("\nRecommended: MiniMax API\n");
     printf("1. Visit https://platform.minimax.cn\n");
     printf("2. Register and get API Key\n");
     printf("3. Tell me the Key\n");
-    printf("\n");
-    printf("Or say 'skip' to continue without:\n");
+    printf("\nOr say 'skip' to continue without:\n");
+    wizard_speak("可以让我更聪明，也可以先跳过");
 }
 
 void wizard_ask_output_mode(void) {
-    printf("\n");
-    printf("📊 Step 4: Response Detail\n");
+    wizard_show("📊 Step 4: Response Detail",
+        "第四步，设置回答详细程度。");
+    
     printf("How detailed should I respond?\n");
     printf("\n");
     printf("  1. Simple   - short: 'ok', 'sunny'\n");
     printf("  2. Normal   - conversational\n");
     printf("  3. Detailed - with data and suggestions\n");
-    printf("\n");
-    printf("Choose 1/2/3: [speak or type]\n");
+    printf("\nChoose 1/2/3: [speak or type]\n");
+    wizard_speak("我回答问题时，要多详细？简单、适中、还是详尽？");
 }
 
 void wizard_complete(void) {
-    printf("\n");
-    printf("╔════════════════════════════════════════╗\n");
-    printf("║        ✅ Setup Complete! 🎉          ║\n");
-    printf("╚════════════════════════════════════════╝\n");
-    printf("\n");
-    printf("Remember:\n");
+    wizard_show("✅ Setup Complete!",
+        "设置完成！我是你的AI助理了！");
+    
+    printf("\nRemember:\n");
     printf("  Wake: hello aide\n");
     printf("  Name: Wang Er Gou\n");
-    printf("\n");
-    printf("Try: say 'hello aide'\n");
+    printf("\nTry: say 'hello aide'\n");
     printf("\n");
     wizard_done = 1;
 }
