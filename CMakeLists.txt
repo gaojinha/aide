@@ -102,7 +102,7 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/ai/knowledge/knowledge.c
     ${SOURCE_DIR}/ai/vector/vector.c
     ${SOURCE_DIR}/ai/memory/user_memory.c
-    ${SOURCE_DIR}/ai/speech/voice.c
+    ${SOURCE_DIR}/ai/speech/speech.c
     ${SOURCE_DIR}/ai/model/local_model.c
     ${SOURCE_DIR}/simulator/simulator.c
 )

@@ -6,7 +6,7 @@ extern int personality_init(void);
 extern int memory_init(void);
 extern int nlp_init(void);
 extern int vision_init(void);
-extern int voice_init(void);
+extern int speech_init(void);
 extern int model_init(void);
 extern int settings_init(void);
 extern int camera_init(void);
@@ -62,6 +62,7 @@ extern void vector_test(void);
 extern void ussd_test(void);
 extern void ftp_test(void);
 extern void email_test(void);
+extern void speech_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -122,6 +123,7 @@ int main(int argc, char *argv[]) {
     ussd_test();
     ftp_test();
     email_test();
+    speech_test();
     
     ai_system_init();
     ui_init();
@@ -130,7 +132,7 @@ int main(int argc, char *argv[]) {
     memory_init();
     nlp_init();
     vision_init();
-    voice_init();
+    speech_init();
     model_init();
     settings_init();
     camera_init();
