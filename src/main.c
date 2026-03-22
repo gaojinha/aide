@@ -15,10 +15,11 @@ extern int model_init(void);
 extern int settings_init(void);
 extern int camera_init(void);
 extern void log_test(void);
-
 extern int config_init(void);
-extern void config_test(void);
 extern void config_list(void);
+
+extern int sensor_init(void);
+extern void sensor_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -29,8 +30,10 @@ int main(int argc, char *argv[]) {
 
     log_init("/tmp/aide.log");
     config_init();
-    config_test();
     config_list();
+    
+    sensor_init();
+    sensor_test();
     
     ai_system_init();
     ui_init();
