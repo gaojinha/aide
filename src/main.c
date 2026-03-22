@@ -16,10 +16,10 @@ extern int sensor_init(void);
 extern int gpio_init(void);
 extern int scheduler_init(void);
 extern int ntp_init(void);
-extern void ntp_test(void);
-
 extern int push_init(void);
-extern void push_test(void);
+
+extern int ota_init(void);
+extern void ota_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -34,9 +34,10 @@ int main(int argc, char *argv[]) {
     gpio_init();
     scheduler_init();
     ntp_init();
-    
     push_init();
-    push_test();
+    
+    ota_init();
+    ota_test();
     
     ai_system_init();
     ui_init();

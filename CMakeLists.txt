@@ -29,6 +29,7 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/core/config/config.c
     ${SOURCE_DIR}/core/log/logger.c
     ${SOURCE_DIR}/core/ntp/ntp.c
+    ${SOURCE_DIR}/core/ota/ota.c
     ${SOURCE_DIR}/driver/camera/camera.c
     ${SOURCE_DIR}/driver/sensor/sensor.c
     ${SOURCE_DIR}/driver/gpio/gpio.c
