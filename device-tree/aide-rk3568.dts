@@ -1,0 +1,228 @@
+/*
+ * aide Device Tree for RK3568
+ */
+
+/dts-v1/;
+
+/ {
+    compatible = "rockchip,rk3568", "aide,ai-assistant";
+    model = "aide AI Assistant Board";
+    
+    chosen {
+        bootargs = "earlycon=uart8250,mmio32,0xfe660000 console=ttyS2,115200n8 rw root=PARTUUID=rootfs";
+        stdout-path = "serial2:115200n8";
+    };
+
+    /* 内存 */
+    memory@0 {
+        device_type = "memory";
+        reg = <0x0 0x0 0x2 0x00000000>; /* 2GB */
+    };
+
+    /* CPU */
+    cpu0: cpu@0 {
+        device_type = "cpu";
+        compatible = "arm,cortex-a55";
+        reg = <0x0 0x0>;
+        enable-method = "psci";
+        clocks = <&cru CLK_CPU>;
+    };
+
+    cpu1: cpu@1 {
+        device_type = "cpu";
+        compatible = "arm,cortex-a55";
+        reg = <0x0 0x1>;
+        enable-method = "psci";
+    };
+
+    cpu2: cpu@2 {
+        device_type = "cpu";
+        compatible = "arm,cortex-a55";
+        reg = <0x0 0x2>;
+        enable-method = "psci";
+    };
+
+    cpu3: cpu@3 {
+        device_type = "cpu";
+        compatible = "arm,cortex-a55";
+        reg = <0x0 0x3>;
+        enable-method = "psci";
+    };
+
+    /* 时钟 */
+    clocks {
+        compatible = "simple-bus";
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        cru: cru@fe150000 {
+            compatible = "rockchip,rk3568-cru";
+            reg = <0x0 0xfe150000 0x0 0x10000>;
+            #clock-cells = <1>;
+        };
+    };
+
+    /* 串口 (UART) */
+    uart2: serial@fe660000 {
+        compatible = "rockchip,rk3568-uart", "snps,dw-apb-uart";
+        reg = <0x0 0xfe660000 0x0 0x100>;
+        interrupts = <GIC_SPI 149 IRQ_TYPE_LEVEL_HIGH>;
+        clock-frequency = <24000000>;
+        reg-shift = <2>;
+        reg-io-width = <4>;
+        status = "okay";
+    };
+
+    /* GPIO 按键 */
+    gpio_keys {
+        compatible = "gpio-keys";
+        autorepeat;
+
+        btn-reset {
+            label = "RESET";
+            linux,code = <116>; /* KEY_POWER */
+            gpios = <&gpio0 RK_PA2 GPIO_ACTIVE_LOW>;
+        };
+
+        btn-wake {
+            label = "WAKE";
+            linux,code = <143>; /* KEY_WAKEUP */
+            gpios = <&gpio0 RK_PA3 GPIO_ACTIVE_LOW>;
+        };
+    };
+
+    /* LED */
+    leds {
+        compatible = "gpio-leds";
+        
+        led-status {
+            label = "status";
+            gpios = <&gpio0 RK_PA4 GPIO_ACTIVE_HIGH>;
+            default-state = "on";
+        };
+
+        led-power {
+            label = "power";
+            gpios = <&gpio0 RK_PA5 GPIO_ACTIVE_HIGH>;
+            default-state = "off";
+        };
+    };
+
+    /* I2C 总线 - 传感器 */
+    i2c1: i2c@fe5a0000 {
+        compatible = "rockchip,rk3568-i2c";
+        reg = <0x0 0xfe5a0000 0x0 0x1000>;
+        interrupts = <GIC_SPI 60 IRQ_TYPE_LEVEL_HIGH>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+        status = "okay";
+
+        /* 光 sensor */
+        als@39 {
+            compatible = "bh1750";
+            reg = <0x39>;
+        };
+
+        /* 加速度计 */
+        accel@68 {
+            compatible = "mpu6050";
+            reg = <0x68>;
+        };
+    };
+
+    /* SPI - 屏幕 */
+    spi0: spi@fe6c0000 {
+        compatible = "rockchip,rk3568-spi";
+        reg = <0x0 0xfe6c0000 0x0 0x1000>;
+        interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+        status = "okay";
+
+        display@0 {
+            compatible = "sitronix,st7789";
+            reg = <0x0>;
+            spi-max-frequency = <50000000>;
+            display-timings = <&timing0>;
+        };
+
+        timing0: timing {
+            timing-width = <320>;
+            timing-height = <480>;
+            timing-hfront-porch = <20>;
+            timing-hback-porch = <10>;
+            timing-hsync-len = <10>;
+            timing-vfront-porch = <14>;
+            timing-vback-porch = <20>;
+            timing-vsync-len = <4>;
+        };
+    };
+
+    /* CSI 摄像头 */
+    csi2: csi2@fe770000 {
+        compatible = "rockchip,rk3568-csi2";
+        reg = <0x0 0xfe770000 0x0 0x1000>;
+        interrupts = <GIC_SPI 94 IRQ_TYPE_LEVEL_HIGH>;
+        status = "okay";
+
+        ports {
+            #address-cells = <1>;
+            #size-cells = <0>;
+
+            port@0 {
+                reg = <0>;
+            };
+        };
+    };
+
+    /* WiFi */
+    wifi: wifi {
+        compatible = "realtek,rtl8189fs";
+        status = "okay";
+    };
+
+    /* 蓝牙 */
+    bluetooth {
+        compatible = "realtek,rtl8723ds";
+        status = "okay";
+    };
+
+    /* 音频编解码 */
+    es8388: es8388@10 {
+        compatible = "everest,es8388";
+        reg = <0x10>;
+        status = "okay";
+    };
+
+    /* PWM 背光 */
+    backlight {
+        compatible = "pwm-backlight";
+        pwms = <&pwm0 0 25000>;
+        brightness-levels = <0 32 64 128 255>;
+        default-brightness-level = <200>;
+    };
+
+    pwm0: pwm@fe6e0030 {
+        compatible = "rockchip,rk3568-pwm";
+        reg = <0x0 0xfe6e0030 0x0 0x10>;
+        #pwm-cells = <3>;
+        status = "okay";
+    };
+
+    /* PMU */
+    pmu {
+        compatible = "rockchip,rk3568-pmu";
+        status = "okay";
+    };
+
+    /* 中断控制器 */
+    gic: interrupt-controller@fd400000 {
+        compatible = "arm,gic-v3";
+        #interrupt-cells = <3>;
+        #address-cells = <1>;
+        #size-cells = <1>;
+        interrupt-controller;
+        reg = <0x0 0xfd400000 0x0 0x10000>,
+              <0x0 0xfd460000 0x0 0x20000>;
+    };
+};
