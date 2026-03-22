@@ -25,10 +25,10 @@ extern int secureboot_init(void);
 extern int secure_storage_init(void);
 extern int firewall_init(void);
 extern int wifi_init(void);
-extern void wifi_test(void);
-
 extern int bluetooth_init(void);
-extern void bluetooth_test(void);
+
+extern int audio_init(void);
+extern void audio_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -52,9 +52,10 @@ int main(int argc, char *argv[]) {
     secure_storage_init();
     firewall_init();
     wifi_init();
-    
     bluetooth_init();
-    bluetooth_test();
+    
+    audio_init();
+    audio_test();
     
     ai_system_init();
     ui_init();
