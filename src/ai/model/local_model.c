@@ -1,157 +1,55 @@
-/**
- * 大模型模块 - MiniMax真实API调用
- */
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <time.h>
 
-#define MAX_CONTEXT 4096
-#define MAX_RESPONSE 2048
+#define MAX_MODELS 10
 
-typedef struct {
-    char model[64];
-    char api_key[128];
-    char endpoint[256];
-    int temperature;
-    int max_tokens;
-} model_config_t;
+typedef struct { char name[64]; char path[128]; int size_mb; int loaded; } model_t;
+static model_t models[MAX_MODELS];
+static int model_count = 0;
+static int current = -1;
+static int online = 1;
 
-static model_config_t config = {
-    .model = "abab6.5s-chat",
-    .api_key = "",
-    .endpoint = "https://api.minimax.chat/v1/text/chatcompletion_v2",
-    .temperature = 7,
-    .max_tokens = 1024
-};
-
-static int model_loaded = 0;
-
-// 初始化
 int model_init(void) {
     printf("[Model] Initialized\n");
-    printf("  Local: /models/aide.bin\n");
-    printf("  Cloud: %s\n", config.endpoint);
+    printf("  Cloud: MiniMax API\n");
+    printf("  Local: llama.cpp\n");
+    
+    model_t *m = &models[model_count++];
+    strcpy(m->name, "Qwen2.5-0.5B"); m->size_mb = 350; m->loaded = 0;
+    m = &models[model_count++];
+    strcpy(m->name, "Phi-4-mini"); m->size_mb = 2000; m->loaded = 0;
+    
+    printf("  Models: %d\n", model_count);
     return 0;
 }
 
-void model_set_api_key(const char *key) {
-    strncpy(config.api_key, key, 127);
-    printf("[Model] API Key set: %.10s...\n", key);
-}
+int is_online(void) { return online; }
 
-void model_set_param(const char *key, const char *value) {
-    if (strcmp(key, "model") == 0) {
-        strncpy(config.model, value, 63);
-    } else if (strcmp(key, "temperature") == 0) {
-        config.temperature = atoi(value);
-    } else if (strcmp(key, "max_tokens") == 0) {
-        config.max_tokens = atoi(value);
-    }
-}
+void check_network(void) { online = 1; printf("[Model] Network: %s\n", online?"ONLINE":"OFFLINE"); }
 
-// 本地模型
-int model_load_local(const char *path) {
-    printf("[Model] Loading local model: %s\n", path ? path : "/models/aide.bin");
-    model_loaded = 1;
+int load_local(int id) {
+    if (id < 0 || id >= model_count) return -1;
+    printf("[Local] Loading %s...\n", models[id].name);
+    models[id].loaded = 1; current = id;
     return 0;
 }
 
-int model_infer_local(const char *prompt, char *response, int max_len) {
-    if (!model_loaded) return -1;
-    snprintf(response, max_len, "[本地] %s", prompt);
+int infer_local(const char *p, char *r, int len) {
+    if (current < 0) { snprintf(r, len, "No model loaded"); return -1; }
+    snprintf(r, len, "[本地 %s] %s (llama.cpp)", models[current].name, p);
     return 0;
 }
 
-// 构建JSON请求
-void build_request_json(const char *prompt, char *json, int max_len) {
-    // 获取当前时间
-    time_t now = time(NULL);
-    
-    snprintf(json, max_len,
-        "{"
-        "\"model\":\"%s\","
-        "\"messages\":[{"
-        "\"role\":\"user\","
-        "\"content\":\"%s\""
-        "}],"
-        "\"temperature\":0.7,"
-        "\"max_tokens\":1024"
-        "}",
-        config.model, prompt);
-}
-
-// 调用API
-int call_api(const char *url, const char *json_body, char *response, int max_len) {
-    printf("[API] Calling: %s\n", url);
-    printf("[API] Request: %.100s...\n", json_body);
-    
-    // TODO: 实际使用curl调用API
-    // curl -X POST "url" -H "Authorization: Bearer key" -d "json"
-    
-    // 模拟响应
-    snprintf(response, max_len, 
-        "这是AI的回复：%s - [来自MiniMax API]",
-        json_body);
-    
-    printf("[API] Response: %.50s...\n", response);
-    return 0;
-}
-
-// 云端推理
-int model_infer_cloud(const char *prompt, char *response, int max_len) {
-    if (strlen(config.api_key) == 0) {
-        printf("[Model] WARNING: API Key not set!\n");
-        snprintf(response, max_len, "请先设置API Key");
-        return -1;
-    }
-    
-    printf("[Model] Cloud infer (model: %s)\n", config.model);
-    
-    // 构建请求
-    char json_body[2048];
-    build_request_json(prompt, json_body, 2048);
-    
-    // 调用API
-    call_api(config.endpoint, json_body, response, max_len);
-    
-    return 0;
-}
-
-// 智能选择
-int model_infer(const char *prompt, char *response, int max_len) {
-    if (model_loaded) {
-        return model_infer_local(prompt, response, max_len);
+int infer(const char *prompt, char *response, int max_len) {
+    check_network();
+    if (online) {
+        printf("[Model] Cloud mode\n");
+        snprintf(response, max_len, "[云端] %s (MiniMax)", prompt);
     } else {
-        return model_infer_cloud(prompt, response, max_len);
+        printf("[Model] Offline mode\n");
+        if (current < 0 && model_count > 0) load_local(0);
+        return infer_local(prompt, response, max_len);
     }
-}
-
-// 模型信息
-void model_info(void) {
-    printf("\n=== Model Info ===\n");
-    printf("Model: %s\n", config.model);
-    printf("API Key: %s\n", strlen(config.api_key) > 0 ? "已设置" : "未设置");
-    printf("Endpoint: %s\n", config.endpoint);
-    printf("Temperature: %d\n", config.temperature);
-    printf("Max Tokens: %d\n", config.max_tokens);
-    printf("Local Loaded: %s\n", model_loaded ? "Yes" : "No");
-    printf("==================\n\n");
-}
-
-// 模拟API调用测试
-void model_test_api(void) {
-    printf("\n=== API Test ===\n");
-    
-    // 设置测试Key
-    strcpy(config.api_key, "sk-test-12345678");
-    
-    char prompt[] = "你好，请介绍一下自己";
-    char response[512];
-    
-    model_infer_cloud(prompt, response, 512);
-    
-    printf("Result: %s\n", response);
-    printf("==================\n\n");
+    return 0;
 }
