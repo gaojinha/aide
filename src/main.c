@@ -17,9 +17,11 @@ extern int camera_init(void);
 extern void log_test(void);
 extern int config_init(void);
 extern void config_list(void);
-
 extern int sensor_init(void);
 extern void sensor_test(void);
+
+extern int gpio_init(void);
+extern void gpio_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -30,10 +32,11 @@ int main(int argc, char *argv[]) {
 
     log_init("/tmp/aide.log");
     config_init();
-    config_list();
-    
     sensor_init();
-    sensor_test();
+    
+    printf("\n=== GPIO Test ===\n");
+    gpio_init();
+    gpio_test();
     
     ai_system_init();
     ui_init();

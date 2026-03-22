@@ -30,6 +30,7 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/core/log/logger.c
     ${SOURCE_DIR}/driver/camera/camera.c
     ${SOURCE_DIR}/driver/sensor/sensor.c
+    ${SOURCE_DIR}/driver/gpio/gpio.c
     ${SOURCE_DIR}/driver/display/display.c
     ${SOURCE_DIR}/driver/network/network.c
     ${SOURCE_DIR}/app/phone/phone.c
