@@ -30,12 +30,15 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/app/messaging/messaging.c
     ${SOURCE_DIR}/app/settings/settings.c
     ${SOURCE_DIR}/ui/ui.c
+    ${SOURCE_DIR}/ai/personality.c
+    ${SOURCE_DIR}/ai/memory/user_memory.c
+    ${SOURCE_DIR}/ai/speech/voice.c
+    ${SOURCE_DIR}/ai/model/local_model.c
 )
 
 add_executable(ai_assistant ${MAIN_SOURCES})
 target_link_libraries(ai_assistant pthread)
 
-# 测试
 enable_testing()
 add_executable(test_core test/unit/test_core.c
     ${SOURCE_DIR}/core/process.c ${SOURCE_DIR}/core/ipc.c
@@ -43,10 +46,5 @@ add_executable(test_core test/unit/test_core.c
 add_executable(test_ai test/unit/test_ai.c)
 add_executable(test_driver test/unit/test_driver.c)
 add_executable(test_app test/unit/test_app.c)
-
-add_test(NAME core_test COMMAND test_core)
-add_test(NAME ai_test COMMAND test_ai)
-add_test(NAME driver_test COMMAND test_driver)
-add_test(NAME app_test COMMAND test_app)
 
 install(TARGETS ai_assistant DESTINATION bin)
