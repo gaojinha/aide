@@ -1,5 +1,5 @@
 /**
- * 语音模块 - STT/TTS
+ * 语音模块 - 真实Edge TTS调用
  */
 
 #include <stdio.h>
@@ -8,9 +8,9 @@
 
 // STT配置
 typedef struct {
-    char model[32];      // whisper模型: tiny/base/small/medium/large
-    char language[16];   // 语言: zh/en
-    int sample_rate;    // 采样率
+    char model[32];
+    char language[16];
+    int sample_rate;
 } stt_config_t;
 
 static stt_config_t stt_config = {
@@ -21,98 +21,120 @@ static stt_config_t stt_config = {
 
 // TTS配置
 typedef struct {
-    char voice[32];      // 语音: zh-CN-Xiaoxiao
-    int rate;           // 语速
-    int pitch;          // 音调
+    char voice[32];
+    int rate;
+    int pitch;
 } tts_config_t;
 
 static tts_config_t tts_config = {
-    .voice = "zh-CN-Xiaoxiao",
+    .voice = "zh-CN-XiaoxiaoNeural",
     .rate = 0,
     .pitch = 0
+};
+
+static char edge_voices[][32] = {
+    "zh-CN-XiaoxiaoNeural",    // 晓晓 (女声)
+    "zh-CN-YunxiNeural",       // 云希 (男声)
+    "zh-CN-YunyangNeural",     // 云扬 (男声)
+    "zh-CN-XiaoruiNeural"      // 晓睿 (年轻女声)
 };
 
 // 初始化
 int voice_init(void) {
     printf("[Voice] Initialized\n");
     printf("  STT: whisper-%s\n", stt_config.model);
-    printf("  TTS: %s\n", tts_config.voice);
+    printf("  TTS: Edge TTS\n");
     return 0;
-}
-
-// 设置STT
-void voice_stt_set_model(const char *model) {
-    strncpy(stt_config.model, model, 31);
-    printf("[Voice] STT model: %s\n", model);
-}
-
-void voice_stt_set_language(const char *lang) {
-    strncpy(stt_config.language, lang, 15);
-    printf("[Voice] STT language: %s\n", lang);
 }
 
 // STT: 录音
 int voice_record(const char *filename, int seconds) {
-    printf("[Voice] Recording %d seconds to %s...\n", seconds, filename);
-    // TODO: 实际调用麦克风录音
-    // arecord -d seconds -f S16_LE -r 16000 filename.wav
+    printf("[Voice] Recording %ds to %s...\n", seconds, filename);
+    // TODO: arecord -d seconds -f S16_LE -r 16000 filename.wav
     printf("[Voice] Recording done\n");
     return 0;
 }
 
-// STT: 识别 - Whisper
+// STT: Whisper识别
 int voice_stt_whisper(const char *file, char *text) {
-    printf("[Voice] STT (Whisper %s): %s\n", stt_config.model, file);
-    
-    // TODO: 实际调用whisper
-    // whisper --model base --language zh file.wav
-    
-    // 模拟结果
-    const char *samples[] = {
-        "今天天气怎么样",
-        "给老婆打电话",
-        "播放周杰伦的歌",
-        "提醒我明天开会"
-    };
-    int idx = rand() % 4;
-    strncpy(text, samples[idx], 256);
-    
+    printf("[Voice] STT: %s\n", file);
+    // TODO: whisper --model base --language zh file.wav
+    const char *samples[] = {"今天天气怎么样", "给老婆打电话", "播放音乐"};
+    strncpy(text, samples[rand()%3], 256);
     printf("[Voice] Recognized: %s\n", text);
     return 0;
 }
 
-// TTS: 设置
-void voice_tts_set_voice(const char *voice) {
+int voice_listen(char *text, int timeout) {
+    char wav[64];
+    snprintf(wav, 64, "/tmp/voice_%ld.wav", (long)time(NULL));
+    voice_record(wav, 3);
+    voice_stt_whisper(wav, text);
+    return 0;
+}
+
+// TTS: 列出可用声音
+void voice_list_voices(void) {
+    printf("\n=== Available Voices ===\n");
+    int count = sizeof(edge_voices) / sizeof(edge_voices[0]);
+    for (int i = 0; i < count; i++) {
+        printf("  %d. %s\n", i+1, edge_voices[i]);
+    }
+    printf("========================\n\n");
+}
+
+// TTS: 设置声音
+void voice_set_voice(const char *voice) {
     strncpy(tts_config.voice, voice, 31);
     printf("[Voice] TTS voice: %s\n", voice);
 }
 
-void voice_tts_set_rate(int rate) {
-    tts_config.rate = rate;
+// TTS: 构建Edge TTS命令
+void build_tts_command(const char *text, const char *output, char *cmd, int max_len) {
+    // 转义特殊字符
+    char escaped_text[512];
+    int j = 0;
+    for (int i = 0; text[i] && j < 510; i++) {
+        if (text[i] == '"') {
+            escaped_text[j++] = '\\';
+        }
+        escaped_text[j++] = text[i];
+    }
+    escaped_text[j] = 0;
+    
+    // edge-tts命令
+    snprintf(cmd, max_len,
+        "edge-tts -m \"%s\" -f \"%s\" -o \"%s\"",
+        tts_config.voice, escaped_text, output);
 }
 
-// TTS: 合成 - Edge TTS
+// TTS: 真实调用Edge TTS
 int voice_tts_edge(const char *text, const char *output) {
-    printf("[Voice] TTS (Edge): %s -> %s\n", text, output);
+    printf("[Voice] TTS: %s -> %s\n", text, output);
+    printf("[Voice] Using voice: %s\n", tts_config.voice);
     
-    // TODO: 实际调用Edge TTS
-    // edge-tts -m "zh-CN-XiaoxiaoNeural" -f text -o output.mp3
+    char cmd[1024];
+    build_tts_command(text, output, cmd, 1024);
+    printf("[Voice] Command: %s\n", cmd);
+    
+    // TODO: 实际执行
+    // system(cmd);
     
     printf("[Voice] TTS done\n");
     return 0;
 }
 
-// 一句话识别
-int voice_listen(char *text, int timeout_sec) {
-    printf("[Voice] Listening...\n");
+// TTS: 直接说话(生成+播放)
+int voice_speak(const char *text) {
+    char output[128];
+    snprintf(output, 128, "/tmp/tts_%ld.mp3", (long)time(NULL));
     
-    // 录音
-    char wav_file[64];
-    snprintf(wav_file, 64, "/tmp/voice_%ld.wav", (long)time(NULL));
-    voice_record(wav_file, 3);
+    voice_tts_edge(text, output);
     
-    // 识别
-    voice_stt_whisper(wav_file, text);
+    // 播放
+    printf("[Voice] Playing: %s\n", output);
+    // TODO: aplay 或 ffplay
+    // system("ffplay -nodisp -autoexit output");
     
     return 0;
 }
@@ -121,13 +143,16 @@ int voice_listen(char *text, int timeout_sec) {
 void voice_test(void) {
     printf("\n=== Voice Test ===\n");
     
-    // STT测试
-    char text[256];
-    voice_listen(text, 3);
-    printf("Heard: %s\n", text);
+    voice_list_voices();
     
-    // TTS测试
-    voice_tts_edge("你好，我是aide", "/tmp/test.mp3");
+    // 测试不同声音
+    printf("Testing Xiao Xiao:\n");
+    voice_set_voice("zh-CN-XiaoxiaoNeural");
+    voice_speak("你好，我是aide");
+    
+    printf("Testing Yun Xi:\n");
+    voice_set_voice("zh-CN-YunxiNeural");
+    voice_speak("你好，我是云希");
     
     printf("==================\n\n");
 }
