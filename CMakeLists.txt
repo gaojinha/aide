@@ -24,6 +24,7 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/core/performance/performance.c
     ${SOURCE_DIR}/core/watchdog/watchdog.c
     ${SOURCE_DIR}/core/power_mgmt/power_mgmt.c
+    ${SOURCE_DIR}/core/power_stats/power_stats.c
     ${SOURCE_DIR}/core/firmware/firmware.c
     ${SOURCE_DIR}/core/unit_test/unit_test.c
     ${SOURCE_DIR}/core/remote_log/remote_log.c
