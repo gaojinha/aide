@@ -13,7 +13,6 @@ set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 include_directories(${INCLUDE_DIR})
 
-# 主程序
 set(MAIN_SOURCES
     ${SOURCE_DIR}/main.c
     ${SOURCE_DIR}/core/system.c
@@ -37,6 +36,7 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/ai/memory/user_memory.c
     ${SOURCE_DIR}/ai/speech/voice.c
     ${SOURCE_DIR}/ai/model/local_model.c
+    ${SOURCE_DIR}/simulator/simulator.c
 )
 
 add_executable(ai_assistant ${MAIN_SOURCES})
