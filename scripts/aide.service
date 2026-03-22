@@ -1,0 +1,25 @@
+[Unit]
+Description=aide AI Assistant
+After=network.target sound.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/gao/aide
+ExecStart=/home/gao/aide/build/aide
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+# 环境变量
+Environment=HOME=/root
+Environment=LANG=zh_CN.UTF-8
+
+# 资源限制
+LimitNOFILE=4096
+LimitNPROC=2048
+
+[Install]
+WantedBy=multi-user.target
