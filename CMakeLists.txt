@@ -21,6 +21,10 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/main.c
     ${SOURCE_DIR}/core/system.c
     ${SOURCE_DIR}/core/error/error.c
+    ${SOURCE_DIR}/core/performance/performance.c
+    ${SOURCE_DIR}/core/performance/mempool.c
+    ${SOURCE_DIR}/core/performance/threadpool.c
+    ${SOURCE_DIR}/core/performance/cache.c
     ${SOURCE_DIR}/core/auth.c
     ${SOURCE_DIR}/core/acl.c
     ${SOURCE_DIR}/core/secureboot.c
