@@ -38,8 +38,9 @@ extern void webadmin_test(void);
 extern void skills_init(void);
 extern void skills_test(void);
 extern void scene_test(void);
-
 extern void workflow_test(void);
+
+extern void study_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -76,8 +77,9 @@ int main(int argc, char *argv[]) {
     skills_init();
     skills_test();
     scene_test();
-    
     workflow_test();
+    
+    study_test();
     
     ai_system_init();
     ui_init();
