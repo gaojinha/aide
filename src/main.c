@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include "ai_assistant.h"
 
 extern int personality_init(void);
@@ -13,10 +14,9 @@ extern int memory_init(void);
 extern int nlp_init(void);
 extern int vision_init(void);
 extern int voice_init(void);
-extern int model_init(void);
-extern void model_set_api_key(const char *key);
-extern void model_test_api(void);
+extern void voice_test(void);
 
+extern int model_init(void);
 extern int settings_init(void);
 
 extern int ui_init(void);
@@ -37,15 +37,8 @@ int main(int argc, char *argv[]) {
     model_init();
     settings_init();
     
-    // 测试API
-    model_test_api();
-    
-    // 测试人格问答
-    printf("\n=== Chat Test ===\n");
-    char output[512];
-    personality_chat("你好", output, 512);
-    printf("User: 你好\n");
-    printf("aide: %s\n", output);
+    // 语音测试
+    voice_test();
     
     printf("\n[Main] aide running...\n");
     sleep(2);
