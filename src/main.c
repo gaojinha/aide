@@ -4,20 +4,18 @@
 
 #include <stdio.h>
 #include <unistd.h>
-#include <stdlib.h>
 #include "ai_assistant.h"
 
 extern int personality_init(void);
-extern int personality_chat(const char *input, char *output, int max_len);
-
 extern int memory_init(void);
 extern int nlp_init(void);
 extern int vision_init(void);
 extern int voice_init(void);
-extern void voice_test(void);
-
 extern int model_init(void);
 extern int settings_init(void);
+
+extern int camera_init(void);
+extern void camera_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -36,9 +34,10 @@ int main(int argc, char *argv[]) {
     voice_init();
     model_init();
     settings_init();
+    camera_init();
     
-    // 语音测试
-    voice_test();
+    // 摄像头测试
+    camera_test();
     
     printf("\n[Main] aide running...\n");
     sleep(2);
