@@ -38,6 +38,7 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/app/messaging/messaging.c
     ${SOURCE_DIR}/app/settings/settings.c
     ${SOURCE_DIR}/app/scheduler/scheduler.c
+    ${SOURCE_DIR}/app/push/push.c
     ${SOURCE_DIR}/app/settings/wizard.c
     ${SOURCE_DIR}/ui/ui.c
     ${SOURCE_DIR}/ai/personality.c

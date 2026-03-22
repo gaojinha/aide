@@ -1,7 +1,3 @@
-/**
- * aide - 主程序
- */
-
 #include <stdio.h>
 #include <unistd.h>
 #include "ai_assistant.h"
@@ -19,9 +15,11 @@ extern int config_init(void);
 extern int sensor_init(void);
 extern int gpio_init(void);
 extern int scheduler_init(void);
-
 extern int ntp_init(void);
 extern void ntp_test(void);
+
+extern int push_init(void);
+extern void push_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -35,9 +33,10 @@ int main(int argc, char *argv[]) {
     sensor_init();
     gpio_init();
     scheduler_init();
-    
     ntp_init();
-    ntp_test();
+    
+    push_init();
+    push_test();
     
     ai_system_init();
     ui_init();
