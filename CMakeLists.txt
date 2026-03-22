@@ -78,6 +78,7 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/app/family/family.c
     ${SOURCE_DIR}/app/finance/finance.c
     ${SOURCE_DIR}/app/life/life.c
+    ${SOURCE_DIR}/app/emergency/emergency.c
     ${SOURCE_DIR}/app/mobile_app/mobile_app.c
     ${SOURCE_DIR}/app/webadmin/webadmin.c
     ${SOURCE_DIR}/ai/skills/skills.c
