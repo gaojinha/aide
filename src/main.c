@@ -40,11 +40,12 @@ extern void skills_test(void);
 extern void scene_test(void);
 extern void workflow_test(void);
 extern void study_test(void);
-
 extern void health_test(void);
 extern void ent_test(void);
 extern void family_test(void);
 extern void finance_test(void);
+
+extern void life_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -83,11 +84,12 @@ int main(int argc, char *argv[]) {
     scene_test();
     workflow_test();
     study_test();
-    
     health_test();
     ent_test();
     family_test();
     finance_test();
+    
+    life_test();
     
     ai_system_init();
     ui_init();
