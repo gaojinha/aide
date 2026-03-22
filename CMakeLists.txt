@@ -65,6 +65,7 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/driver/display/display.c
     ${SOURCE_DIR}/driver/network/network.c
     ${SOURCE_DIR}/app/phone/phone.c
+    ${SOURCE_DIR}/app/contacts/contacts.c
     ${SOURCE_DIR}/app/messaging/messaging.c
     ${SOURCE_DIR}/app/settings/settings.c
     ${SOURCE_DIR}/app/scheduler/scheduler.c

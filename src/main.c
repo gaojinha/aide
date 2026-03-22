@@ -55,6 +55,7 @@ extern void sdk_test(void);
 extern void multidevice_test(void);
 extern void monitoring_test(void);
 extern void biometric_test(void);
+extern void contacts_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -108,6 +109,7 @@ int main(int argc, char *argv[]) {
     multidevice_test();
     monitoring_test();
     biometric_test();
+    contacts_test();
     
     ai_system_init();
     ui_init();
