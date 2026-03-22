@@ -24,9 +24,11 @@ extern int acl_init(void);
 extern int secureboot_init(void);
 extern int secure_storage_init(void);
 extern int firewall_init(void);
-
 extern int wifi_init(void);
 extern void wifi_test(void);
+
+extern int bluetooth_init(void);
+extern void bluetooth_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -49,9 +51,10 @@ int main(int argc, char *argv[]) {
     secureboot_init();
     secure_storage_init();
     firewall_init();
-    
     wifi_init();
-    wifi_test();
+    
+    bluetooth_init();
+    bluetooth_test();
     
     ai_system_init();
     ui_init();
