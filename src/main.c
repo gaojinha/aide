@@ -33,8 +33,8 @@ int main(int argc, char *argv[]) {
     printf("[System] Running...\n");
     
     // 主循环 - 等待信号
-    while (1) {
-        sleep(1);
+    for (int i = 0; i < 3; i++) {
+        printf("[System] Tick...\n"); sleep(1);
     }
 
     // 停止系统

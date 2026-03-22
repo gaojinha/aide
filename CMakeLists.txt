@@ -1,13 +1,17 @@
 cmake_minimum_required(VERSION 3.10)
-project(AI Aide VERSION 0.1.0 LANGUAGES C)
+project(aide VERSION 0.1.0 LANGUAGES C)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
-set(CMAKE_SYSTEM_NAME Linux)
-set(CMAKE_SYSTEM_PROCESSOR aarch64)
-set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)
-set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++)
+# 根据架构选择编译器
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
+    set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)
+    set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++)
+    message(STATUS "Cross-compiling for ARM64")
+else()
+    message(STATUS "Building for host")
+endif()
 
 set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
