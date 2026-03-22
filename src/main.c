@@ -59,6 +59,9 @@ extern void contacts_test(void);
 extern void imagegen_test(void);
 extern void knowledge_test(void);
 extern void vector_test(void);
+extern void ussd_test(void);
+extern void ftp_test(void);
+extern void email_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -116,6 +119,9 @@ int main(int argc, char *argv[]) {
     imagegen_test();
     knowledge_test();
     vector_test();
+    ussd_test();
+    ftp_test();
+    email_test();
     
     ai_system_init();
     ui_init();
