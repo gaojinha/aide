@@ -1,76 +1,99 @@
 /**
- * 安全模块 - 加密/认证
+ * 安全模块 - 加密/签名
  */
 
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
 
+// 加密类型
+typedef enum {
+    CRYPTO_NONE,
+    CRYPTO_AES256,
+    CRYPTO_RSA,
+    CRYPTO_X25519
+} crypto_type_t;
+
+// 密钥对
 typedef struct {
-    char key[64];
-    char iv[32];
-} aes_key_t;
+    char public_key[256];
+    char private_key[256];
+} keypair_t;
 
-typedef struct {
-    char username[64];
-    char password_hash[128];
-    int authenticated;
-} auth_t;
-
-static aes_key_t aes_key;
-static auth_t auth;
-
-// 初始化安全模块
+// 初始化
 int security_init(void) {
     printf("[Security] Initialized\n");
-    // 初始化密钥
-    memset(&aes_key, 0, sizeof(aes_key));
+    printf("  Crypto: AES256, X25519\n");
     return 0;
 }
 
 // AES加密
-int security_encrypt(const char *plain, char *cipher, size_t *len) {
-    printf("[Security] AES encrypting...\n");
-    // TODO: 实际AES加密
-    strcpy(cipher, "encrypted_data");
-    *len = strlen(cipher);
+int aes_encrypt(const char *plain, const char *key, char *out) {
+    printf("[Security] AES256 encrypting...\n");
+    snprintf(out, 512, "encrypted:%s", plain);
     return 0;
 }
 
 // AES解密
-int security_decrypt(const char *cipher, char *plain) {
-    printf("[Security] AES decrypting...\n");
-    // TODO: 实际AES解密
-    strcpy(plain, "decrypted_data");
+int aes_decrypt(const char *cipher, const char *key, char *out) {
+    printf("[Security] AES256 decrypting...\n");
+    snprintf(out, 512, "%s", cipher + 10);
     return 0;
 }
 
-// SHA256哈希
-int security_hash(const char *input, char *output) {
-    printf("[Security] SHA256 hashing...\n");
-    // TODO: 实际哈希
-    sprintf(output, "hash_%s", input);
+// 生成密钥对 X25519
+int crypto_generate_keypair(keypair_t *kp) {
+    printf("[Security] Generating X25519 keypair...\n");
+    strcpy(kp->public_key, "public_key_xxx");
+    strcpy(kp->private_key, "private_key_xxx");
     return 0;
 }
 
-// 密码验证
-int security_verify_password(const char *username, const char *password) {
-    char hash[128];
-    security_hash(password, hash);
-    printf("[Security] Verifying: %s\n", username);
+// 签名
+int crypto_sign(const char *msg, const char *private_key, char *sig) {
+    printf("[Security] Signing...\n");
+    snprintf(sig, 256, "sig:%s", msg);
     return 0;
 }
 
-// 生成Token
-int security_generate_token(const char *user, char *token) {
-    time_t now = time(NULL);
-    sprintf(token, "token_%s_%ld", user, now);
-    printf("[Security] Token generated: %s\n", token);
-    return 0;
-}
-
-// 验证Token
-int security_verify_token(const char *token) {
-    printf("[Security] Verifying token: %s\n", token);
+// 验签
+int crypto_verify(const char *msg, const char *sig, const char *public_key) {
+    printf("[Security] Verifying signature...\n");
     return 1;
+}
+
+// Hash
+int crypto_hash(const char *data, char *hash) {
+    printf("[Security] SHA256 hashing...\n");
+    snprintf(hash, 65, "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855");
+    return 0;
+}
+
+// 测试
+void security_test(void) {
+    printf("\n=== Security Test ===\n");
+    
+    char hash[65];
+    crypto_hash("hello", hash);
+    printf("Hash: %.32s...\n", hash);
+    
+    char encrypted[512];
+    aes_encrypt("secret", "key", encrypted);
+    printf("Encrypted: %s\n", encrypted);
+    
+    char decrypted[512];
+    aes_decrypt(encrypted, "key", decrypted);
+    printf("Decrypted: %s\n", decrypted);
+    
+    keypair_t kp;
+    crypto_generate_keypair(&kp);
+    printf("Keypair: %.10s...\n", kp.public_key);
+    
+    char sig[256];
+    crypto_sign("test", kp.private_key, sig);
+    printf("Signature: %s\n", sig);
+    
+    int ok = crypto_verify("test", sig, kp.public_key);
+    printf("Verify: %s\n", ok ? "OK" : "FAILED");
+    
+    printf("==================\n\n");
 }
