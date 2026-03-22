@@ -46,6 +46,7 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/core/ipc.c
     ${SOURCE_DIR}/core/storage.c
     ${SOURCE_DIR}/core/security.c
+    ${SOURCE_DIR}/core/crypto/crypto.c
     ${SOURCE_DIR}/core/protocol/http.c
     ${SOURCE_DIR}/core/protocol/websocket.c
     ${SOURCE_DIR}/core/config/config.c
