@@ -37,6 +37,8 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/app/settings/settings.c
     ${SOURCE_DIR}/ui/ui.c
     ${SOURCE_DIR}/ai/personality.c
+    ${SOURCE_DIR}/ai/nlp/nlp.c
+    ${SOURCE_DIR}/ai/vision/vision.c
     ${SOURCE_DIR}/ai/memory/user_memory.c
     ${SOURCE_DIR}/ai/speech/voice.c
     ${SOURCE_DIR}/ai/model/local_model.c
