@@ -18,9 +18,10 @@ extern int scheduler_init(void);
 extern int ntp_init(void);
 extern int push_init(void);
 extern int ota_init(void);
-
 extern int security_init(void);
-extern void security_test(void);
+
+extern int auth_init(void);
+extern void auth_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -37,9 +38,10 @@ int main(int argc, char *argv[]) {
     ntp_init();
     push_init();
     ota_init();
-    
     security_init();
-    security_test();
+    
+    auth_init();
+    auth_test();
     
     ai_system_init();
     ui_init();
