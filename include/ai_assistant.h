@@ -1,6 +1,6 @@
 /**
  * @file ai_assistant.h
- * @brief AI助理系统头文件
+ * @brief AI Aide系统头文件
  * 
  * 提供系统初始化、启动、停止等功能
  * 
@@ -40,7 +40,7 @@ typedef enum {
 } system_state_t;
 
 /**
- * @brief 初始化AI助理系统
+ * @brief 初始化AI Aide系统
  * @return 0成功，-1失败
  * 
  * @note 调用此函数后，系统进入就绪状态
@@ -48,7 +48,7 @@ typedef enum {
 int ai_system_init(void);
 
 /**
- * @brief 启动AI助理系统
+ * @brief 启动AI Aide系统
  * @return 0成功，-1失败
  * 
  * @pre 系统必须已初始化
@@ -56,7 +56,7 @@ int ai_system_init(void);
 int ai_system_start(void);
 
 /**
- * @brief 停止AI助理系统
+ * @brief 停止AI Aide系统
  * @return 0成功，-1失败
  */
 int ai_system_stop(void);
