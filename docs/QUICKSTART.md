@@ -22,7 +22,7 @@ make
 
 ```bash
 # 在x86上测试
-./ai_assistant
+./aide
 
 # 交叉编译后拷贝到RK3568开发板运行
 ```
