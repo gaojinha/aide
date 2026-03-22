@@ -29,6 +29,10 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/core/unit_test/unit_test.c
     ${SOURCE_DIR}/core/remote_log/remote_log.c
     ${SOURCE_DIR}/core/backup/backup.c
+    ${SOURCE_DIR}/core/debug/debug.c
+    ${SOURCE_DIR}/core/monitor/monitor.c
+    ${SOURCE_DIR}/core/recovery/recovery.c
+    ${SOURCE_DIR}/core/logrotate/logrotate.c
     ${SOURCE_DIR}/core/performance/mempool.c
     ${SOURCE_DIR}/core/performance/threadpool.c
     ${SOURCE_DIR}/core/performance/cache.c
