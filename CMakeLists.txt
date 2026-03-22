@@ -73,6 +73,10 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/app/scene/scene.c
     ${SOURCE_DIR}/app/workflow/workflow.c
     ${SOURCE_DIR}/app/study/study.c
+    ${SOURCE_DIR}/app/health/health.c
+    ${SOURCE_DIR}/app/entertainment/entertainment.c
+    ${SOURCE_DIR}/app/family/family.c
+    ${SOURCE_DIR}/app/finance/finance.c
     ${SOURCE_DIR}/app/mobile_app/mobile_app.c
     ${SOURCE_DIR}/app/webadmin/webadmin.c
     ${SOURCE_DIR}/ai/skills/skills.c
