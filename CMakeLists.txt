@@ -22,6 +22,9 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/core/system.c
     ${SOURCE_DIR}/core/error/error.c
     ${SOURCE_DIR}/core/performance/performance.c
+    ${SOURCE_DIR}/core/watchdog/watchdog.c
+    ${SOURCE_DIR}/core/power_mgmt/power_mgmt.c
+    ${SOURCE_DIR}/core/firmware/firmware.c
     ${SOURCE_DIR}/core/performance/mempool.c
     ${SOURCE_DIR}/core/performance/threadpool.c
     ${SOURCE_DIR}/core/performance/cache.c

@@ -32,8 +32,12 @@ extern int power_init(void);
 extern int ir_init(void);
 extern int file_manager_init(void);
 extern void error_test(void);
-
 extern void performance_test(void);
+
+extern int watchdog_init(void);
+extern void watchdog_test(void);
+extern void power_mgmt_test(void);
+extern void firmware_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -64,7 +68,12 @@ int main(int argc, char *argv[]) {
     ir_init();
     file_manager_init();
     
-    performance_test();
+    watchdog_init();
+    watchdog_test();
+    
+    power_mgmt_test();
+    
+    firmware_test();
     
     ai_system_init();
     ui_init();
