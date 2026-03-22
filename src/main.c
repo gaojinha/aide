@@ -12,14 +12,20 @@ extern int nlp_init(void);
 extern int vision_init(void);
 extern int voice_init(void);
 extern int model_init(void);
-extern int log_init(const char *filename);
+extern void model_set_api_key(const char *key);
+extern void model_set_param(const char *key, const char *value);
+extern int model_infer(const char *prompt, char *resp, int max);
+extern void model_info(void);
+extern int settings_init(void);
+extern int settings_set_string(const char *key, const char *value);
+extern int settings_set_int(const char *key, int value);
+extern const char* settings_get_string(const char *key);
+extern int settings_get_int(const char *key);
+extern void settings_list(void);
 
-// UI函数
 extern int ui_init(void);
 extern void ui_splash(void);
-extern void ui_status_bar(void);
 extern void ui_chat(const char *role, const char *msg);
-extern void ui_progress(const char *label, int percent);
 
 int main(int argc, char *argv[]) {
     ui_splash();
@@ -36,21 +42,24 @@ int main(int argc, char *argv[]) {
     voice_init();
     model_init();
     
-    printf("\n");
-    ui_progress("Loading modules", 30);
-    sleep(1);
-    ui_progress("Loading AI", 70);
-    sleep(1);
-    ui_progress("Starting", 100);
-    printf("\n\n");
+    printf("\n--- Settings ---\n");
+    settings_init();
+    settings_set_string("api_key", "sk-xxx");
+    settings_set_int("volume", 75);
+    settings_set_string("wake_word", "你好 aide");
+    settings_list();
     
-    ui_status_bar();
+    printf("\n--- Model ---\n");
+    model_set_api_key("sk-test-key");
+    model_set_param("temperature", "0.7");
+    model_info();
     
-    printf("\n");
-    ui_chat("user", "你好！");
-    ui_chat("aide", "你好！我是 aide，很高兴为你服务！");
-    ui_chat("user", "今天天气怎么样？");
-    ui_chat("aide", "今天天气晴朗，温度25°C！");
+    // 测试对话
+    printf("\n--- AI Chat ---\n");
+    char response[512];
+    model_infer("你好，请介绍一下自己", response, 512);
+    ui_chat("user", "你好，请介绍一下自己");
+    ui_chat("aide", response);
     
     printf("\n[Main] aide running...\n");
     sleep(2);
