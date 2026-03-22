@@ -47,6 +47,13 @@ extern void finance_test(void);
 extern void life_test(void);
 
 extern void emergency_test(void);
+extern void document_test(void);
+extern void language_test(void);
+extern void reading_test(void);
+extern void social_test(void);
+extern void sdk_test(void);
+extern void multidevice_test(void);
+extern void monitoring_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -92,6 +99,13 @@ int main(int argc, char *argv[]) {
     life_test();
     
     emergency_test();
+    document_test();
+    language_test();
+    reading_test();
+    social_test();
+    sdk_test();
+    multidevice_test();
+    monitoring_test();
     
     ai_system_init();
     ui_init();

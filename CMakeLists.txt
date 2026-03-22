@@ -79,6 +79,13 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/app/finance/finance.c
     ${SOURCE_DIR}/app/life/life.c
     ${SOURCE_DIR}/app/emergency/emergency.c
+    ${SOURCE_DIR}/app/document/document.c
+    ${SOURCE_DIR}/app/language/language.c
+    ${SOURCE_DIR}/app/reading/reading.c
+    ${SOURCE_DIR}/app/social/social.c
+    ${SOURCE_DIR}/core/sdk/sdk.c
+    ${SOURCE_DIR}/app/multidevice/multidevice.c
+    ${SOURCE_DIR}/core/monitoring/monitoring.c
     ${SOURCE_DIR}/app/mobile_app/mobile_app.c
     ${SOURCE_DIR}/app/webadmin/webadmin.c
     ${SOURCE_DIR}/ai/skills/skills.c
