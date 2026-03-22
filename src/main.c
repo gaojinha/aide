@@ -1,5 +1,5 @@
 /**
- * AI Assistant - 主程序
+ * aide - 主程序
  * 基于RK3568的AI手机系统
  */
 
@@ -9,7 +9,7 @@
 
 int main(int argc, char *argv[]) {
     printf("===========================================\n");
-    printf("  AI Assistant v%s\n", AI_ASSISTANT_VERSION);
+    printf("  aide v%s\n", AI_ASSISTANT_VERSION);
     printf("  Build: %s\n", AI_ASSISTANT_BUILD);
     printf("  Platform: RK3568\n");
     printf("===========================================\n\n");
