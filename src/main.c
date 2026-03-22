@@ -28,9 +28,13 @@ extern int wifi_init(void);
 extern int bluetooth_init(void);
 extern int audio_init(void);
 extern int video_init(void);
-
 extern int power_init(void);
-extern void power_test(void);
+
+extern int ir_init(void);
+extern void ir_test(void);
+
+extern int file_manager_init(void);
+extern void file_manager_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -57,9 +61,13 @@ int main(int argc, char *argv[]) {
     bluetooth_init();
     audio_init();
     video_init();
-    
     power_init();
-    power_test();
+    
+    ir_init();
+    ir_test();
+    
+    file_manager_init();
+    file_manager_test();
     
     ai_system_init();
     ui_init();
