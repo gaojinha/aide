@@ -46,11 +46,13 @@ extern void net_diag_test(void);
 extern void power_stats_test(void);
 extern void debug_test(void);
 extern void monitor_test(void);
-
 extern void recovery_init(void);
 extern void recovery_test(void);
 extern void logrotate_init(int size, int keep);
 extern void logrotate_test(void);
+
+extern void mobile_app_init(void);
+extern void mobile_app_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -81,17 +83,8 @@ int main(int argc, char *argv[]) {
     ir_init();
     file_manager_init();
     
-    net_diag_init();
-    net_diag_test();
-    power_stats_test();
-    debug_test();
-    monitor_test();
-    
-    recovery_init();
-    recovery_test();
-    
-    logrotate_init(10240, 5);
-    logrotate_test();
+    mobile_app_init();
+    mobile_app_test();
     
     ai_system_init();
     ui_init();
