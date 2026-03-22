@@ -31,28 +31,13 @@ extern int video_init(void);
 extern int power_init(void);
 extern int ir_init(void);
 extern int file_manager_init(void);
-extern void error_test(void);
-extern void performance_test(void);
-extern int watchdog_init(void);
-extern void watchdog_test(void);
-extern void power_mgmt_test(void);
-extern void firmware_test(void);
-extern void unit_test_init(void);
-extern void test_run_all(void);
-extern void remote_log_test(void);
-extern void backup_test(void);
-extern void net_diag_init(void);
-extern void net_diag_test(void);
-extern void power_stats_test(void);
-extern void debug_test(void);
-extern void monitor_test(void);
-extern void recovery_init(void);
-extern void recovery_test(void);
-extern void logrotate_init(int size, int keep);
-extern void logrotate_test(void);
-
 extern void mobile_app_init(void);
 extern void mobile_app_test(void);
+
+extern void webadmin_init(int port);
+extern void webadmin_test(void);
+extern void skills_init(void);
+extern void skills_test(void);
 
 extern int ui_init(void);
 extern void ui_splash(void);
@@ -82,9 +67,14 @@ int main(int argc, char *argv[]) {
     power_init();
     ir_init();
     file_manager_init();
-    
     mobile_app_init();
     mobile_app_test();
+    
+    webadmin_init(8088);
+    webadmin_test();
+    
+    skills_init();
+    skills_test();
     
     ai_system_init();
     ui_init();
