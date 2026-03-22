@@ -21,7 +21,7 @@ cmake ..
 make
 
 # 5. 生成的二进制文件
-# build/ai_assistant
+# build/aide
 ```
 
 ## 目录结构
@@ -52,5 +52,5 @@ src/
 
 1. 在 `src/` 目录添加代码
 2. 重新 `make`
-3. 拷贝 `build/ai_assistant` 到开发板
+3. 拷贝 `build/aide` 到开发板
 4. 在开发板上运行测试

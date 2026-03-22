@@ -3,7 +3,7 @@
 
 set -e
 
-echo "=== AI助理 构建脚本 ==="
+echo "=== aide 构建脚本 ==="
 
 # 检查工具
 command -v aarch64-linux-gnu-gcc >/dev/null 2>&1 || { 

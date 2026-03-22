@@ -15,7 +15,7 @@ int main(void) {
     printf("识别结果: %s\n", text);
     
     // 语音合成
-    voice_tts_edge("你好，我是AI助理", "hello.mp3");
+    voice_tts_edge("你好，我是 aide", "hello.mp3");
     printf("语音合成完成\n");
     
     return 0;

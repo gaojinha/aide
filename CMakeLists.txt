@@ -43,7 +43,7 @@ set(MAIN_SOURCES
     ${SOURCE_DIR}/simulator/simulator.c
 )
 
-add_executable(ai_assistant ${MAIN_SOURCES})
-target_link_libraries(ai_assistant pthread)
+add_executable(aide ${MAIN_SOURCES})
+target_link_libraries(aide pthread)
 
-install(TARGETS ai_assistant DESTINATION bin)
+install(TARGETS aide DESTINATION bin)

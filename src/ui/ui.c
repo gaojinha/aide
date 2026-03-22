@@ -22,7 +22,7 @@ int ui_init(void) {
 // 主菜单
 void ui_main_menu(void) {
     printf(C_BLUE"\n╔══════════════════════════════════╗\n"C_RESET);
-    printf(C_BLUE"║      AI助理 v0.1.0             ║\n"C_RESET);
+    printf(C_BLUE"║      aide v0.1.0             ║\n"C_RESET);
     printf(C_BLUE"╠══════════════════════════════════╣\n"C_RESET);
     printf(C_BLUE"║  1. 🤖 对话                    ║\n"C_RESET);
     printf(C_BLUE"║  2. 📞 电话                    ║\n"C_RESET);

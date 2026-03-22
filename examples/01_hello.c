@@ -6,7 +6,7 @@
 #include "ai_assistant.h"
 
 int main(void) {
-    printf("Hello, AI Assistant!\n");
+    printf("Hello, aide!\n");
     
     // 初始化系统
     ai_system_init();
